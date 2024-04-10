@@ -3,7 +3,7 @@ MIPFLAGS= ${CFLAGS} -mhard-float -falign-functions=16 -march=mips64r2 -mno-share
 CC=gcc
 
 
-NATIVE_LIB_TARGETS=../target/release/librsa_bindings_musl.a
+NATIVE_LIB_TARGETS=../target/release/librsa_bindings.a
 
 all: ${NATIVE_LIB_TARGETS} librsa.h main.c
 	${CC} -g -ggdb -O1 main.c ${NATIVE_LIB_TARGETS} ${CFLAGS} -lm -o main

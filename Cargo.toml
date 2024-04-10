@@ -1,5 +1,5 @@
 [package]
-name = "rsa_bindings_musl"
+name = "rsa_bindings"
 version = "0.1.0"
 edition = "2021"
 

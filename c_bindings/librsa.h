@@ -36,6 +36,9 @@ struct Buffer encrypt_string(char *pem_public_key, char *data);
  */
 char *decrypt_string(char *pem_private_key, uint8_t *data);
 
+/**
+ *Only use this if you HAVE to. This seems to cause a double free in my usage
+ */
 void free_buf(struct Buffer buf);
 
 #endif /* LIBRSA */
