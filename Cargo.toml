@@ -1,0 +1,21 @@
+[package]
+name = "rsa_bindings_musl"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[profile.release]
+opt-level = 3
+lto=true
+strip = "debuginfo"
+
+[dependencies]
+rand = "0.8.5"
+rsa = "0.9.6"
+
+[build-dependencies]
+cbindgen = "0.26.0"
