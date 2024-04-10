@@ -14,10 +14,6 @@ use std::{
 use std::ptr::null_mut;
 use rsa::traits::PublicKeyParts;
 
-#[repr(C)]
-struct Buffer{
-    data: *mut u8
-}
 #[macro_export]
 macro_rules! c_str {
     ($lit:ident) => {
@@ -74,7 +70,7 @@ fn generate_public_key(rsa_private_key: *const c_char) -> *mut c_char {
 #[doc = "Returns a 256 byte long byte array containing the encrypted string"]
 #[no_mangle]
 pub extern "C"
-fn encrypt_string(pem_public_key: *mut c_char, data: *mut c_char) -> Buffer {
+fn encrypt_string(pem_public_key: *mut c_char, data: *mut c_char) -> *mut u8 {
     let pem_public_key = r_str(pem_public_key);
     let binding = r_str(data);
     let data = binding.as_bytes();
@@ -85,7 +81,7 @@ fn encrypt_string(pem_public_key: *mut c_char, data: *mut c_char) -> Buffer {
     let data = enc_data.as_mut_ptr();
     println!("{:?}",enc_data);
     std::mem::forget(enc_data);
-    Buffer{data}
+    data
 }
 
 
@@ -104,13 +100,4 @@ fn decrypt_string(pem_private_key: *mut c_char, data: *mut u8) -> *mut c_char {
     let data = String::from_utf8(enc_data).unwrap();
     dbg!(&data);
     c_str!(data)
-}
-#[doc="Only use this if you HAVE to. This seems to cause a double free in my usage"]
-#[no_mangle]
-extern "C" fn free_buf(buf: Buffer) {
-    let s = unsafe { std::slice::from_raw_parts_mut(buf.data,256 as usize) };
-    let s = s.as_mut_ptr();
-    unsafe {
-        Box::from_raw(s);
-    }
 }

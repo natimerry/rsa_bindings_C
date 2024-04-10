@@ -10,10 +10,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef struct Buffer {
-  uint8_t *data;
-} Buffer;
-
 void generate_pub_keys(void);
 
 /**
@@ -29,16 +25,11 @@ char *generate_public_key(const char *rsa_private_key);
 /**
  *Returns a 256 byte long byte array containing the encrypted string
  */
-struct Buffer encrypt_string(char *pem_public_key, char *data);
+uint8_t *encrypt_string(char *pem_public_key, char *data);
 
 /**
  *Returns a c_string with the unencrypted data
  */
 char *decrypt_string(char *pem_private_key, uint8_t *data);
-
-/**
- *Only use this if you HAVE to. This seems to cause a double free in my usage
- */
-void free_buf(struct Buffer buf);
 
 #endif /* LIBRSA */

@@ -13,14 +13,14 @@ int main(void) {
     printf("%s",public_key);
 
 
-    Buffer buffer = encrypt_string(public_key,"hello world!");
+    uint8_t * buffer = encrypt_string(public_key,"hello !");
 
     for (uintptr_t i =0; i < 256; i++){
-        printf("%d,",buffer.data[i]);
+        printf("%d,",buffer[i]);
     }
     printf("\nEnd of bytes\n");
 
-    char *unencrypted = decrypt_string(private_key,buffer.data);
+    char *unencrypted = decrypt_string(private_key,buffer);
     printf("%s",unencrypted);
 
     return 0;
